@@ -4,6 +4,7 @@
 	"runtime-version": "5.10",
 	"sdk": "org.kde.Sdk",
 	"command": "openclonk",
+	"branch": "stable",
 	"finish-args": [
 		"--socket=x11",
 		"--share=network",
@@ -29,13 +30,15 @@
 				},
 				{
 					"type": "file",
-					"url": "http://www.openclonk.org/download/Music.ocg",
-					"sha256": "3327baa65d5e4a0110fef38b7c3b1d1c38e9da58dbddeb86281afbb37ebed96e",
-					"dest-filename": "full-Music.ocg"
+					"path": "substitute-full-music.sh",
+					"dest-filename": "apply_extra"
 				},
 				{
-					"type": "file",
-					"path": "substitute-full-music.sh"
+					"type": "extra-data",
+					"filename": "Music.ocg",
+					"url": "http://www.openclonk.org/download/Music.ocg",
+					"sha256": "3327baa65d5e4a0110fef38b7c3b1d1c38e9da58dbddeb86281afbb37ebed96e",
+					"size": 195253507
 				}
 			],
 			"buildsystem": "cmake",
@@ -44,10 +47,11 @@
 				"-DAudio_FIND_REQUIRED=On",
 				"-DAudio_TK=OpenAL",
 				"-DCMAKE_CXX_FLAGS=-w",
-				"-DCMAKE_C_FLAGS=-w"
+				"-DCMAKE_C_FLAGS=-w",
+				"-DOC_SYSTEM_DATA_DIR=/app/extra/"
 			],
 			"build-commands": [
-				"./substitute-full-music.sh"
+				"install apply_extra /app/bin/"
 			],
 			"cleanup": [
 				"/include",
